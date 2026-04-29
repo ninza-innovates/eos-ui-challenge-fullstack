@@ -78,4 +78,4 @@ curl "http://127.0.0.1:8000/api/jobs/regions"
 ## Tradeoffs / Assumptions
 
 Implemented the required behavior in the provided stubs to align with the challenge structure and keep review straightforward. Backend filtering uses exact case-insensitive matching with AND logic, assuming `region` and `status` are canonical values rather than partial search terms. On the frontend, region filtering is handled in NGXS selectors to keep the component declarative and easier to test, at the cost of a bit more store boilerplate. The app intentionally uses the provided mock-backed service and lightweight inline styling to prioritize functional requirements over live API wiring and design-system setup.
->>>>>>> 3eb06fc (Add README.md)
+
