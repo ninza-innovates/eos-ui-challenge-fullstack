@@ -26,7 +26,15 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class StatusBadgePipe implements PipeTransform {
   transform(status: string): string {
-    // TODO: Implement transformation logic.
-    throw new Error('StatusBadgePipe not implemented');
+    switch (status) {
+      case 'Active':
+        return 'badge badge--active';
+      case 'Planned':
+        return 'badge badge--planned';
+      case 'Complete':
+        return 'badge badge--complete';
+      default:
+        return 'badge badge--default';
+    }
   }
 }

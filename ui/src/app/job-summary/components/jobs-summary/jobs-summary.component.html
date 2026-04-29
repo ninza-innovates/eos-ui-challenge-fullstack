@@ -20,4 +20,45 @@
   Minimal inline styles are fine — keep it clean and readable.
 -->
 
-<p>TODO: implement template</p>
+<section
+  style="background: #fff; border: 1px solid #dfe1e6; border-radius: 8px; padding: 16px;"
+>
+  <label for="region-filter" style="display: block; margin-bottom: 8px; font-weight: 600;"
+    >Region</label
+  >
+  <select
+    id="region-filter"
+    (change)="onRegionChange($event)"
+    style="margin-bottom: 16px; padding: 6px 10px; border: 1px solid #c1c7d0; border-radius: 4px;"
+  >
+    <option value="">All Regions</option>
+    @for (region of regions$ | async; track region) {
+      <option [value]="region">{{ region }}</option>
+    }
+  </select>
+
+  <table style="width: 100%; border-collapse: collapse;">
+    <thead>
+      <tr style="text-align: left; border-bottom: 1px solid #dfe1e6;">
+        <th style="padding: 8px;">Job Name</th>
+        <th style="padding: 8px;">Status</th>
+        <th style="padding: 8px;">Region</th>
+        <th style="padding: 8px;">Days Planned</th>
+        <th style="padding: 8px;">% Complete</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (item of filteredItems$ | async; track trackByJobId($index, item)) {
+        <tr style="border-bottom: 1px solid #ebecf0;">
+          <td style="padding: 10px 8px;">{{ item.padName }}</td>
+          <td style="padding: 10px 8px;">
+            <span [class]="item.statusName | statusBadge">{{ item.statusName }}</span>
+          </td>
+          <td style="padding: 10px 8px;">{{ item.regionName }}</td>
+          <td style="padding: 10px 8px;">{{ item.daysPlanned }}</td>
+          <td style="padding: 10px 8px;">{{ item.percentComplete }}%</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</section>

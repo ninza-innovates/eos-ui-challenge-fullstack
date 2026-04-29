@@ -1,13 +1,11 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-
-// TODO: Import and add JobsSummaryComponent to `imports` once implemented.
-// import { JobsSummaryComponent } from './job-summary/components/jobs-summary/jobs-summary.component';
+import { JobStatusSummaryComponent } from './job-summary/components/jobs-summary/jobs-summary.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
-    // JobStatusSummaryComponent,
+    JobStatusSummaryComponent
   ],
   template: `
     <main style="max-width: 960px; margin: 32px auto; padding: 0 16px;">
@@ -15,12 +13,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
         EOS — Job Status Summary
       </h1>
 
-      <!-- TODO: Uncomment once JobStatusSummaryComponent is implemented -->
-      <!-- <app-jobs-summary /> -->
-
-      <p style="color: #6b778c; font-style: italic;">
-        Implement <code>JobsSummaryComponent</code> and uncomment the tag above.
-      </p>
+      <app-jobs-summary />
     </main>
   `,
   changeDetection: ChangeDetectionStrategy.OnPush

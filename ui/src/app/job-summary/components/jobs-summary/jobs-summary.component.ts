@@ -1,10 +1,15 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  inject
+} from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { Store } from '@ngxs/store';
-// TODO: Import your selectors, payload, and pipe once implemented.
-// import { JobSummaryStoreSelectors } from '../../store/job-summary.store.selectors';
-// import { JobSummaryStorePayload } from '../../store/job-summary.store.payload';
-// import { StatusBadgePipe } from '../../pipes/status-badge.pipe';
+import { JobSummaryStoreSelectors } from '../../store/job-summary.store.selectors';
+import { JobSummaryStorePayload } from '../../store/job-summary.store.payload';
+import { StatusBadgePipe } from '../../pipes/status-badge.pipe';
+import { JobSummaryDataModel } from '../../models/job-summary.data.model';
 
 /**
  * TODO: Implement JobStatusSummaryComponent.
@@ -35,7 +40,7 @@ import { Store } from '@ngxs/store';
   standalone: true,
   imports: [
     AsyncPipe,
-    // StatusBadgePipe,
+    StatusBadgePipe
   ],
   templateUrl: './jobs-summary.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -43,21 +48,21 @@ import { Store } from '@ngxs/store';
 export class JobStatusSummaryComponent implements OnInit {
   private store = inject(Store);
 
-  // TODO: Declare filteredItems$ and regions$ observables using store.select().
+  filteredItems$ = this.store.select(JobSummaryStoreSelectors.filteredItems);
+  regions$ = this.store.select(JobSummaryStoreSelectors.regions);
 
   ngOnInit(): void {
-    // TODO: Dispatch LoadJobSummary here.
+    this.store.dispatch(new JobSummaryStorePayload.LoadJobSummary());
   }
 
   onRegionChange(event: Event): void {
-    // TODO: Read the selected value from the event target and dispatch SetRegionFilter.
-    // Pass null when the user selects "All Regions".
+    const selectedValue = (event.target as HTMLSelectElement).value;
+    this.store.dispatch(
+      new JobSummaryStorePayload.SetRegionFilter(selectedValue || null)
+    );
   }
-}
 
-// Add this import at the top once Store is used
-function inject<T>(token: any): T {
-  // This stub keeps the file compilable before implementation.
-  // Replace with Angular's inject() from @angular/core once you wire up the imports.
-  throw new Error('Replace this stub with: import { inject } from "@angular/core"');
+  trackByJobId(_index: number, item: JobSummaryDataModel.Item): string {
+    return item.jobId;
+  }
 }
