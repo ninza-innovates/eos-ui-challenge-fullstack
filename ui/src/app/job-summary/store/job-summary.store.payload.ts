@@ -21,3 +21,14 @@
  *     }
  *   }
  */
+export namespace JobSummaryStorePayload {
+  export class LoadJobSummary {
+    static readonly type = '[ Job Summary ] Load';
+  }
+
+  export class SetRegionFilter {
+    static readonly type = '[ Job Summary ] Set Region Filter';
+
+    constructor(public region: string | null) {}
+  }
+}

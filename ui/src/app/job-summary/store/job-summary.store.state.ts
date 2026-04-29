@@ -2,10 +2,9 @@ import { inject, Injectable } from '@angular/core';
 import { Action, State, StateContext } from '@ngxs/store';
 import { tap } from 'rxjs';
 import { JobSummaryDataService } from '../job-summary.data.service';
-// TODO: Import your model, payload, and mapper once implemented.
-// import { JobSummaryStoreModel as StateModel } from './job-summary.store.model';
-// import { JobSummaryStorePayload as Payload } from './job-summary.store.payload';
-// import { mapDtoToJobSummaryItem } from '../models/job-summary.data.map';
+import { JobSummaryStoreModel as StateModel } from './job-summary.store.model';
+import { JobSummaryStorePayload as Payload } from './job-summary.store.payload';
+import { mapDtoToJobSummaryItem } from '../models/job-summary.data.map';
 
 /**
  * TODO: Implement the NGXS state class.
@@ -25,8 +24,32 @@ import { JobSummaryDataService } from '../job-summary.data.service';
  * Hint: use patchState() from StateContext for partial updates.
  */
 @Injectable()
+@State<StateModel.State>({
+  name: 'jobSummary',
+  defaults: StateModel.defaults
+})
 export class JobSummaryStoreState {
   private dataService = inject(JobSummaryDataService);
 
-  // TODO: Add @Action handlers here.
+  @Action(Payload.LoadJobSummary)
+  loadJobSummary(ctx: StateContext<StateModel.State>) {
+    ctx.patchState({ loading: true });
+
+    return this.dataService.getJobSummary().pipe(
+      tap((items) => {
+        ctx.patchState({
+          items: items.map(mapDtoToJobSummaryItem),
+          loading: false
+        });
+      })
+    );
+  }
+
+  @Action(Payload.SetRegionFilter)
+  setRegionFilter(
+    ctx: StateContext<StateModel.State>,
+    action: Payload.SetRegionFilter
+  ): void {
+    ctx.patchState({ selectedRegion: action.region });
+  }
 }

@@ -1,5 +1,4 @@
-// TODO: Import JobSummaryDataModel once you've defined it.
-// import { JobSummaryDataModel } from '../models/job-summary.data.model';
+import { JobSummaryDataModel } from '../models/job-summary.data.model';
 
 /**
  * TODO: Define the NGXS state shape and default values.
@@ -21,3 +20,16 @@
  *     export const defaults: State = { ... };
  *   }
  */
+export namespace JobSummaryStoreModel {
+  export interface State {
+    items: JobSummaryDataModel.Item[];
+    selectedRegion: string | null;
+    loading: boolean;
+  }
+
+  export const defaults: State = {
+    items: [],
+    selectedRegion: null,
+    loading: false
+  };
+}

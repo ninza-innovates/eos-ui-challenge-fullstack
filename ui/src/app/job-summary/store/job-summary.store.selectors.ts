@@ -1,8 +1,7 @@
 import { Selector } from '@ngxs/store';
-// TODO: Import your model and state class once implemented.
-// import { JobSummaryStoreState } from './job-summary.store.state';
-// import { JobSummaryStoreModel as StateModel } from './job-summary.store.model';
-// import { JobSummaryDataModel } from '../models/job-summary.data.model';
+import { JobSummaryStoreState } from './job-summary.store.state';
+import { JobSummaryStoreModel as StateModel } from './job-summary.store.model';
+import { JobSummaryDataModel } from '../models/job-summary.data.model';
 
 /**
  * TODO: Implement the selector class.
@@ -24,4 +23,25 @@ import { Selector } from '@ngxs/store';
  * Use the @Selector decorator from @ngxs/store.
  * Compose selectors where it makes sense (e.g. regions can consume items).
  */
-export class JobSummaryStoreSelectors {}
+export class JobSummaryStoreSelectors {
+  @Selector([JobSummaryStoreState])
+  static items(state: StateModel.State): JobSummaryDataModel.Item[] {
+    return state.items;
+  }
+
+  @Selector([JobSummaryStoreState])
+  static filteredItems(state: StateModel.State): JobSummaryDataModel.Item[] {
+    if (state.selectedRegion === null) {
+      return state.items;
+    }
+
+    return state.items.filter((item) => item.regionName === state.selectedRegion);
+  }
+
+  @Selector([JobSummaryStoreSelectors.items])
+  static regions(items: JobSummaryDataModel.Item[]): string[] {
+    return [...new Set(items.map((item) => item.regionName))].sort((a, b) =>
+      a.localeCompare(b)
+    );
+  }
+}

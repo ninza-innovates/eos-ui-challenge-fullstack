@@ -1,6 +1,5 @@
 import { DtoJobSummaryDataModel } from './dto-job-summary.data.model';
-// TODO: Import JobSummaryDataModel once you've defined it.
-// import { JobSummaryDataModel } from './job-summary.data.model';
+import { JobSummaryDataModel } from './job-summary.data.model';
 
 /**
  * TODO: Implement the mapper function.
@@ -14,3 +13,16 @@ import { DtoJobSummaryDataModel } from './dto-job-summary.data.model';
  *     dto: DtoJobSummaryDataModel.Item
  *   ): JobSummaryDataModel.Item { ... }
  */
+export function mapDtoToJobSummaryItem(
+  dto: DtoJobSummaryDataModel.Item
+): JobSummaryDataModel.Item {
+  return {
+    jobId: dto.job_id,
+    padName: dto.pad_name,
+    statusName: dto.status_name,
+    regionName: dto.region_name,
+    planStartDate: dto.plan_start_date,
+    daysPlanned: dto.days_planned,
+    percentComplete: dto.percent_complete
+  };
+}

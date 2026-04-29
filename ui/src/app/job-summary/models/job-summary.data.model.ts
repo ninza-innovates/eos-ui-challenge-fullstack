@@ -12,3 +12,14 @@
  *     }
  *   }
  */
+export namespace JobSummaryDataModel {
+  export interface Item {
+    jobId: string;
+    padName: string;
+    statusName: string;
+    regionName: string;
+    planStartDate: string;
+    daysPlanned: number;
+    percentComplete: number;
+  }
+}
