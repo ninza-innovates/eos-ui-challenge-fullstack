@@ -20,7 +20,21 @@ def get_jobs(
           - Filters should be combinable (AND logic).
           - Matching should be case-insensitive.
     """
-    raise NotImplementedError
+    filtered_jobs = JOB_SUMMARY_DATA
+
+    if region is not None:
+        region_filter = region.casefold()
+        filtered_jobs = [
+            job for job in filtered_jobs if job["region_name"].casefold() == region_filter
+        ]
+
+    if status is not None:
+        status_filter = status.casefold()
+        filtered_jobs = [
+            job for job in filtered_jobs if job["status_name"].casefold() == status_filter
+        ]
+
+    return [JobSummaryItem(**job) for job in filtered_jobs]
 
 
 @router.get("/regions", response_model=list[str])
@@ -30,7 +44,7 @@ def get_regions() -> list[str]:
 
     TODO: Derive the list from JOB_SUMMARY_DATA and return it sorted alphabetically.
     """
-    raise NotImplementedError
+    return sorted({job["region_name"] for job in JOB_SUMMARY_DATA})
 
 
 @router.get("/{job_id}", response_model=JobSummaryItem)
@@ -41,4 +55,8 @@ def get_job(job_id: str) -> JobSummaryItem:
     TODO: Look up the job in JOB_SUMMARY_DATA.
           Raise an HTTP 404 if no matching job is found.
     """
-    raise NotImplementedError
+    for job in JOB_SUMMARY_DATA:
+        if job["job_id"] == job_id:
+            return JobSummaryItem(**job)
+
+    raise HTTPException(status_code=404, detail=f"Job '{job_id}' not found")
