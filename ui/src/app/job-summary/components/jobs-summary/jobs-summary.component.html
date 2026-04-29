@@ -1,0 +1,23 @@
+<!--
+  TODO: Implement the template for JobsSummaryComponent.
+
+  Required elements:
+
+  1. Region filter dropdown
+     ─────────────────────
+     <select> that dispatches SetRegionFilter on change.
+     First option should be "All Regions" (value="").
+     Remaining options come from (regions$ | async).
+
+  2. Job table (or list)
+     ────────────────────
+     Iterate over (filteredItems$ | async) with *ngFor and trackBy.
+     Display columns: Job Name | Status | Region | Days Planned | % Complete
+
+     Status cell example (use StatusBadgePipe):
+       <span [class]="item.statusName | statusBadge">{{ item.statusName }}</span>
+
+  Minimal inline styles are fine — keep it clean and readable.
+-->
+
+<p>TODO: implement template</p>
