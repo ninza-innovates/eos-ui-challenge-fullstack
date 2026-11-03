@@ -2,3 +2,5 @@ ui/node_modules/
 ui/dist/
 ui/.angular/
 ui/*.js.map
+
+.DS_Store
