@@ -62,7 +62,7 @@ npm test
 npm run build
 ```
 
-`npm test` runs `ng test` (Karma and Jasmine) and watches for changes. The spec files under `src/app/job-summary/` are commented starter stubs, so a run can finish with no active tests. For a single headless run:
+`npm test` runs `ng test` (Karma and Jasmine) and watches for changes. The specs under `src/app/job-summary/` cover camelCase mapping and the region selectors. For a single headless run:
 
 ```bash
 npm test -- --watch=false --browsers=ChromeHeadless

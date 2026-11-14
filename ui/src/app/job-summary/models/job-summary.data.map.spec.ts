@@ -1,32 +1,30 @@
-/**
- * BONUS: Unit tests for the mapper function.
- *
- * These are optional but recommended — they demonstrate that you can reason
- * about data transformations in isolation.
- */
+import { mapDtoToJobSummaryItem } from './job-summary.data.map';
+import { DtoJobSummaryDataModel } from './dto-job-summary.data.model';
 
-// TODO: Uncomment and complete once your mapper is implemented.
+describe('mapDtoToJobSummaryItem', () => {
+  const dto: DtoJobSummaryDataModel.Item = {
+    job_id: 'job-001',
+    pad_name: 'Permian Basin Alpha',
+    status_name: 'Active',
+    region_name: 'Permian',
+    plan_start_date: '2025-03-01',
+    days_planned: 45,
+    percent_complete: 62
+  };
 
-// import { mapDtoToJobSummaryItem } from './job-summary.data.map';
-// import { DtoJobSummaryDataModel } from './dto-job-summary.data.model';
+  it('should map all fields to camelCase', () => {
+    expect(mapDtoToJobSummaryItem(dto)).toEqual({
+      jobId: 'job-001',
+      padName: 'Permian Basin Alpha',
+      statusName: 'Active',
+      regionName: 'Permian',
+      planStartDate: '2025-03-01',
+      daysPlanned: 45,
+      percentComplete: 62
+    });
+  });
 
-// describe('mapDtoToJobSummaryItem', () => {
-//   const dto: DtoJobSummaryDataModel.Item = {
-//     job_id: 'job-001',
-//     job_name: 'Test Job',
-//     status_name: 'Active',
-//     region_name: 'Permian',
-//     plan_start_date: '2025-03-01',
-//     days_planned: 45,
-//     percent_complete: 62
-//   };
-//
-//   it('should map all fields to camelCase', () => {
-//     const result = mapDtoToJobSummaryItem(dto);
-//     // TODO: add expectations
-//   });
-//
-//   it('should handle every field without throwing', () => {
-//     expect(() => mapDtoToJobSummaryItem(dto)).not.toThrow();
-//   });
-// });
+  it('should handle every field without throwing', () => {
+    expect(() => mapDtoToJobSummaryItem(dto)).not.toThrow();
+  });
+});
