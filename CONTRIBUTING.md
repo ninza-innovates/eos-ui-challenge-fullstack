@@ -29,12 +29,13 @@ Endpoints:
 - `GET /api/jobs/regions`
 - `GET /api/jobs/{job_id}` (404 when the id is unknown, for example `/api/jobs/missing`)
 
-`requirements.txt` does not include a test runner, and there is no backend test suite. The check that CI runs, from `backend/`, is:
+`requirements.txt` does not include a separate test runner. `tests/test_jobs.py` uses the standard-library `unittest` module to check filtering, region lookup, the 404 for an unknown id, and that `/api/jobs/regions` is registered before `/api/jobs/{job_id}`. The check that CI runs, from `backend/`, is:
 
 ```bash
 python -m pip install -r requirements.txt
-python -m compileall -q app
+python -m compileall -q app tests
 python -c "from app.main import app"
+python -m unittest discover -s tests -t .
 ```
 
 A running server can also be checked with:
@@ -74,7 +75,7 @@ CI does not run Karma. From `ui/` it runs `npm install` and `npm run build`, whi
 
 CI (`.github/workflows/ci.yml`) runs on every push and pull request:
 
-- Backend: install `backend/requirements.txt`, compile `app`, and import `app.main:app`.
+- Backend: install `backend/requirements.txt`, compile `app` and `tests`, import `app.main:app`, and run `python -m unittest discover -s tests -t .`.
 - UI: `npm install` and `npm run build`.
 
 Keep `node_modules/`, `dist/`, `.angular/`, and `backend/.venv/` out of commits. They are already gitignored.
